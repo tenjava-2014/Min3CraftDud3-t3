@@ -8,7 +8,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Random;
@@ -23,6 +22,8 @@ public class MyL implements Listener {
     static int encounterSteps=0;
     public MyL(TenJava plugin){this.plugin=plugin;}
 
+    //Detects amount of steps the player has walked and sends them to the checkSteps() to be compared against the random encounter steps int.
+    //If both ints match the mobs will randomly be generates within 5 blocks of the player.
     @EventHandler
     public void onMovement(PlayerMoveEvent e){
         Player p = e.getPlayer();
@@ -32,15 +33,14 @@ public class MyL implements Listener {
         }
         if(e.getFrom().getBlockX()==e.getTo().getBlockX() && e.getFrom().getBlockY()==e.getTo().getBlockY() && e.getFrom().getBlockZ()==e.getTo().getBlockZ())return;
         numSteps++;
-        System.out.println(numSteps);
         checkSteps(p);
     }
     public static void checkSteps(Player p){
         if(numSteps==encounterSteps){
             doMobAttack(p);
             p.sendMessage(ChatColor.RED + "Wild Mobs Appeared!!");
-            System.out.println("Spawning mobs on player");
             encounterSteps=0;
+            numSteps = 0;
         }
     }
     public static void doMobAttack(Player p) {
@@ -56,53 +56,38 @@ public class MyL implements Listener {
                 int type = rand.nextInt(6);
                 switch (type) {
                     case 0: //Zombie
-                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.ZOMBIE);
                         w.spawnEntity(mSpawnLoc,EntityType.ZOMBIE);
                         Bukkit.broadcastMessage("Z");
                         break;
                     case 1: //Skeleton
-                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.SKELETON);
                         w.spawnEntity(mSpawnLoc,EntityType.SKELETON);
                         Bukkit.broadcastMessage("S");
                         break;
                     case 2: //Spider
-                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.SPIDER);
                         w.spawnEntity(mSpawnLoc,EntityType.SPIDER);
                         Bukkit.broadcastMessage("SP");
                         break;
                     case 3: //Witch
-                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.WITCH);
                         w.spawnEntity(mSpawnLoc,EntityType.WITCH);
                         Bukkit.broadcastMessage("W");
                         break;
                     case 4: //CaveSpider
-                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.CAVE_SPIDER);
                         w.spawnEntity(mSpawnLoc,EntityType.CAVE_SPIDER);
                         Bukkit.broadcastMessage("CS");
                         break;
                     case 5: //PigZombie
-                        //p.getWorld().spawnEntity(mSpawnLoc, EntityType.PIG_ZOMBIE);
                         w.spawnEntity(mSpawnLoc,EntityType.PIG_ZOMBIE);
                         Bukkit.broadcastMessage("PZ");
                         break;
                     case 6: //Creeper
-                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.CREEPER);
                         w.spawnEntity(mSpawnLoc,EntityType.CREEPER);
                         Bukkit.broadcastMessage("C");
                         break;
                 }
         }
-        encounterSteps=0;
     }
     public static int randInt(int min, int max){
         int randNumber = rand.nextInt((max-min)+1)+min;
         return randNumber;
     }
-    @EventHandler
-    public void onSpawn(CreatureSpawnEvent e){
-        if(e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)){
-            e.setCancelled(true);
-        }
-    }
-
 }

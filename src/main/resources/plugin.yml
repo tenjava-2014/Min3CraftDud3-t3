@@ -1,3 +1,8 @@
 name: Min3CraftDud3-t3
 main: com.tenjava.entries.Min3CraftDud3.t3.TenJava
 version: 1.0
+description: Plugin made for ten.java 2014 - Theme: What random events can occur in Minecraft?
+author: Min3CraftDud3
+commands:
+  info:
+    description: displays plugin info.
