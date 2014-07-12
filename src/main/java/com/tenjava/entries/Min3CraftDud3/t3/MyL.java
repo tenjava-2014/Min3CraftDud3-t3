@@ -1,6 +1,7 @@
 package com.tenjava.entries.Min3CraftDud3.t3;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
@@ -18,16 +19,20 @@ public class MyL implements Listener {
     TenJava plugin;
     static Random rand = new Random();
     static int numSteps = 0;
+    static int encounterSteps=0;
     public MyL(TenJava plugin){this.plugin=plugin;}
 
     @EventHandler
     public void onMovement(PlayerMoveEvent e){
+        if(encounterSteps==0){
+            encounterSteps = rand.nextInt(400);
+        }
         if(e.getFrom().getBlockX()==e.getTo().getBlockX() && e.getFrom().getBlockY()==e.getTo().getBlockY() && e.getFrom().getBlockZ()==e.getTo().getBlockZ())return;
         numSteps++;
+        System.out.println(numSteps);
         checkSteps(e.getPlayer());
     }
     public static void checkSteps(Player p){
-        int encounterSteps = rand.nextInt(400);
         if(numSteps==encounterSteps){
             doMobAttack(p);
         }
@@ -41,6 +46,7 @@ public class MyL implements Listener {
             double locX = randInt((int)l.getX()-5,(int)l.getX()+5);
             double locY = randInt((int)l.getY()-5,(int)l.getY()+5);
             double locZ = w.getHighestBlockYAt((int)locX,(int)locY);
+            p.sendMessage(ChatColor.RED+"Wild Mobs Appeared!!");
             int type = rand.nextInt(7);
             switch (type) {
                 case 0: //Zombie
@@ -72,6 +78,7 @@ public class MyL implements Listener {
                     Bukkit.getWorld(p.getWorld().toString()).spawnEntity(mSpawnLoc, EntityType.CREEPER);
                     break;
             }
+            encounterSteps=0;
         }
     }
     public static int randInt(int min, int max){
