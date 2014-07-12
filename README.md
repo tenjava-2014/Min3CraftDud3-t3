@@ -29,7 +29,16 @@ Usage
 -----
 
 1. Install plugin
-2. Do things with it
+2. Start/Restart your server.
+3. Enjoy random mob encounters!
+
+---------------------------------------
+
+About
+-----
+- __What does the plugin do?:__ This plugin creates random combat event similar to Final Fantasy or Pokemon.
+- __How?:__ Well the plugin randomly generates a number between 0-400 compares that random number to the amount of steps taken by the player since the last mob encounter.
+- __What Types of mobs are there?:__ Mobs included are: Zombie, Skeleton, Creeper, Spider, Cave Spider, Witch and Pig Zombie.
 
 <!-- Hi, Min3CraftDud3! This is the default README for every ten.java submission. -->
 <!-- We encourage you to edit this README with some information about your submission – keep in mind you'll be scored on documentation! -->
