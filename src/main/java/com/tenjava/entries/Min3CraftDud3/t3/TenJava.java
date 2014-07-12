@@ -11,8 +11,9 @@ public class TenJava extends JavaPlugin {
     public void onEnable(){
         getServer().getPluginManager().registerEvents(myl,this);
     }
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
-        if(command.getName().equalsIgnoreCase("info")){
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,String label, String[] args) {
+        if(label.equalsIgnoreCase("info")){
             sender.sendMessage(ChatColor.GOLD+"oOo___ Ten.Java 2014 ___oOo");
             sender.sendMessage("Author: Min3CraftDud3");
             sender.sendMessage("Time Taken: 3 Hours");
