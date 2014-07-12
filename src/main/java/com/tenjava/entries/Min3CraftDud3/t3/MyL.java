@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -41,6 +40,7 @@ public class MyL implements Listener {
             doMobAttack(p);
             p.sendMessage(ChatColor.RED + "Wild Mobs Appeared!!");
             System.out.println("Spawning mobs on player");
+            encounterSteps=0;
         }
     }
     public static void doMobAttack(Player p) {
@@ -50,38 +50,44 @@ public class MyL implements Listener {
         Location mSpawnLoc;
         for (int i = 0; i < numMobs; i++) {
                 double locX = randInt((int) l.getX() - 5, (int) l.getX() + 5);
-                double locY = randInt((int) l.getY() - 5, (int) l.getY() + 5);
-                double locZ = w.getHighestBlockYAt((int) locX, (int) locY);
+                double locZ = randInt((int) l.getZ() - 5, (int) l.getZ() + 5);
+                double locY = w.getHighestBlockYAt((int) locX, (int) locZ);
                 mSpawnLoc = new Location(w, locX, locY, locZ);
                 int type = rand.nextInt(6);
                 switch (type) {
                     case 0: //Zombie
                        // p.getWorld().spawnEntity(mSpawnLoc, EntityType.ZOMBIE);
-                        p.getWorld().spawnCreature(mSpawnLoc, EntityType.ZOMBIE);
+                        w.spawnEntity(mSpawnLoc,EntityType.ZOMBIE);
                         Bukkit.broadcastMessage("Z");
                         break;
                     case 1: //Skeleton
-                        p.getWorld().spawnEntity(mSpawnLoc, EntityType.SKELETON);
+                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.SKELETON);
+                        w.spawnEntity(mSpawnLoc,EntityType.SKELETON);
                         Bukkit.broadcastMessage("S");
                         break;
                     case 2: //Spider
-                        p.getWorld().spawnEntity(mSpawnLoc, EntityType.SPIDER);
+                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.SPIDER);
+                        w.spawnEntity(mSpawnLoc,EntityType.SPIDER);
                         Bukkit.broadcastMessage("SP");
                         break;
                     case 3: //Witch
-                        p.getWorld().spawnEntity(mSpawnLoc, EntityType.WITCH);
+                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.WITCH);
+                        w.spawnEntity(mSpawnLoc,EntityType.WITCH);
                         Bukkit.broadcastMessage("W");
                         break;
                     case 4: //CaveSpider
-                        p.getWorld().spawnEntity(mSpawnLoc, EntityType.CAVE_SPIDER);
+                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.CAVE_SPIDER);
+                        w.spawnEntity(mSpawnLoc,EntityType.CAVE_SPIDER);
                         Bukkit.broadcastMessage("CS");
                         break;
                     case 5: //PigZombie
-                        p.getWorld().spawnEntity(mSpawnLoc, EntityType.PIG_ZOMBIE);
+                        //p.getWorld().spawnEntity(mSpawnLoc, EntityType.PIG_ZOMBIE);
+                        w.spawnEntity(mSpawnLoc,EntityType.PIG_ZOMBIE);
                         Bukkit.broadcastMessage("PZ");
                         break;
                     case 6: //Creeper
-                        p.getWorld().spawnEntity(mSpawnLoc, EntityType.CREEPER);
+                       // p.getWorld().spawnEntity(mSpawnLoc, EntityType.CREEPER);
+                        w.spawnEntity(mSpawnLoc,EntityType.CREEPER);
                         Bukkit.broadcastMessage("C");
                         break;
                 }
@@ -94,7 +100,7 @@ public class MyL implements Listener {
     }
     @EventHandler
     public void onSpawn(CreatureSpawnEvent e){
-        if(e.getEntity() instanceof Slime){
+        if(e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL)){
             e.setCancelled(true);
         }
     }
